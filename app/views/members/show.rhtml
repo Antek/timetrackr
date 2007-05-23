@@ -1,0 +1,22 @@
+<h1><%= @member.fullname %> (<%= @member.group.name %>)</h1>
+
+
+<% @member.timetracks.weeks.each do |week| %>
+	<h3>Weeknr. <%= week %></h3>
+	<table id="timetracks">
+		<tr>
+			<th>Datum</th>
+			<th>Omschrijving</th>
+			<th>Aantal uren</th>
+		</tr>
+		<%= render :partial => 'timetracks/timetrack', :collection => @member.timetracks.in_week(week) %>
+		<tr>
+			<td></td>
+			<td>Totaal</td>
+			<% hours = 0;  @member.timetracks.in_week(week).each { |t| hours += t.hours_spent } %>
+			<td id='total-time'><%= hours %></td>
+		</tr>
+	</table>
+<% end %>
+
+<%= render :partial => 'timetracks/new' %>

@@ -1,0 +1,7 @@
+if @group.errors.empty?
+  page.replace_html('groups', select(:member, :group_id, Group.find(:all).collect {|p| [ p.name, p.id ] }, { :include_blank => true }))
+else
+  @group.errors.each do |e|
+    page.alert e
+  end
+end

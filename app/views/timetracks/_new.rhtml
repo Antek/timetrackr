@@ -1,0 +1,19 @@
+<%= error_messages_for :timetrack %>
+<div id='new-timetrack'>
+	<% form_for :timetrack, 
+			:url => member_timetracks_path(:member_id => @member.id), 
+			:html => { :id => 'timetrack-form' } do |f| -%>
+
+	<p><label for="date">Datum</label><br/>
+	<%= f.date_select :date %></p>
+
+	<p>
+			<label for="description">Omschrijving</label>
+		<%= f.text_field :description, :size => 25 %><br />
+			<label for="minutes_spent">Aantal uren</label>
+		<%= f.text_field :hours_spent, :size => 10 %>
+	</p>
+
+	<p><%= submit_tag 'Voeg toe!' %></p>
+	<% end -%>
+</div>

@@ -1,0 +1,36 @@
+<%= error_messages_for :member %>
+
+
+<fieldset>
+
+<% form_for :member, :url => members_path, :html => {:name => 'member_form'}  do |f| -%>
+
+<p><label for="group_id">Selecteer je groep</label>
+	<div id="groups">
+	<%= f.select :group_id, Group.find(:all).collect {|p| [ p.name, p.id ] }, { :include_blank => true } %>
+	</div>
+	<br />
+Of maak gelijk een nieuwe groep aan.</p>
+
+<input id="group_name" name="group[name]" size="10" type="text" />
+<img onClick="new Ajax.Request('/groups', {asynchronous:true, evalScripts:true, parameters: 'group[name]=' + document.member_form.group_name.value }); document.member_form.group_name.value = ''; return false;" src="/images/icons/add.png"
+
+</fieldset>
+
+<p><label for="login">Inlognaam</label><br/>
+<%= f.text_field :login %></p>
+
+<p><label for="fullname">Volledige naam</label><br/>
+<%= f.text_field :fullname %></p>
+
+<p><label for="email">Email</label><br/>
+<%= f.text_field :email %></p>
+
+<p><label for="password">Password</label><br/>
+<%= f.password_field :password %></p>
+
+<p><label for="password_confirmation">Confirm Password</label><br/>
+<%= f.password_field :password_confirmation %></p>
+
+<p><%= submit_tag 'Sign up' %></p>
+<% end -%>
