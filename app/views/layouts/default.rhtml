@@ -14,9 +14,13 @@
 <div class="titleblock"><h1>TimeTrackr</h1><p>&ldquo;Mijn urenverantwoording bijhouden was nog nooit leuk!.&rdquo; - anonieme gebruiker</p></div>
 
 <div><ul class="navbar">
+		<% if logged_in? %>
+		 <li><%= link_to "Uitloggen", logout_path, :class => 'nav'  %></li>
+		<% else %>
+		 <li><%= link_to "Inloggen", login_path, :class => 'nav'  %></li>
+		<% end%>
 		 <li><%= link_to "Groepen", groups_path, :class => 'nav' %></li>
 		 <li><%= link_to "Mijn uren", member_path(current_member), :class => 'nav' if logged_in? %>
-		 <li><%= link_to "Uitloggen", logout_path, :class => 'nav' if logged_in? %></li>
 </ul></div>
 
 <!-- <div class="rightcontainer">
