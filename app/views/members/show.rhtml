@@ -1,9 +1,15 @@
-<h1><%= @member.fullname %> (<%= @member.group.name %>)</h1>
+<h1>Groep: <%= @member.group.name %></h1>
+<h2>Lid: <%= @member.fullname %></h2>
 
+<hr />
+<%= render :partial => 'timetracks/new' %>
+<hr />
 
 <% @member.timetracks.weeks.each do |week| %>
-	<h3>Weeknr. <%= week %></h3>
+	<% unless @member.timetracks.in_week(week).empty? %>
+	<h3>2007, week <%= week %></h3>
 	<table id="timetracks">
+		<caption>Urenoverzicht week <%= week %>, 2007</caption>
 		<tr>
 			<th>Datum</th>
 			<th>Omschrijving</th>
@@ -13,10 +19,9 @@
 		<tr>
 			<td></td>
 			<td>Totaal</td>
-			<% hours = 0;  @member.timetracks.in_week(week).each { |t| hours += t.hours_spent } %>
-			<td id='total-time'><%= hours %></td>
+			<td id='total-time'><%= @member.timetracks.total_hours_in_week(week) %></td>
 		</tr>
 	</table>
+	<% end %>
 <% end %>
 
-<%= render :partial => 'timetracks/new' %>

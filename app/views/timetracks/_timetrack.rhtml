@@ -1,5 +1,5 @@
 <tr id="timetrack-<%= timetrack.id %>">
-	<td><%= timetrack.date %></td>
+	<td><%= timetrack.date.strftime("%a %d %b") %></td>
 	<td><%= timetrack.description %></td>
 	<td><%= timetrack.hours_spent %></td>
 </tr>
