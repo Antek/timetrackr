@@ -3,6 +3,7 @@ class Member < ActiveRecord::Base
   has_many :timetracks, :order => 'date ASC, created_at ASC' do
     def weeks
       timetracks = self.find(:all)
+      return [] if timetracks.empty?
       first_week = timetracks.first.date.cweek
       last_week = timetracks.last.date.cweek
       first_week..last_week
