@@ -1,9 +1,11 @@
-<h1>Groep: <%= @member.group.name %></h1>
+<h1>Groep: <%= link_to @member.group.name, group_path(@member.group) %></h1>
 <h2>Lid: <%= @member.fullname %></h2>
 
+<% if logged_in? && @member == current_member %>
 <hr />
 <%= render :partial => 'timetracks/new' %>
 <hr />
+<% end %>
 
 <% @member.timetracks.weeks.each do |week| %>
 	<% unless @member.timetracks.in_week(week).empty? %>

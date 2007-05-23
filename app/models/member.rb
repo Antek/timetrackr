@@ -1,6 +1,6 @@
 require 'digest/sha1'
 class Member < ActiveRecord::Base
-  has_many :timetracks, :order => 'date ASC' do
+  has_many :timetracks, :order => 'date ASC, created_at ASC' do
     def weeks
       timetracks = self.find(:all)
       first_week = timetracks.first.date.cweek

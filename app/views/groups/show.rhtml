@@ -1,0 +1,10 @@
+<h2>Leden van PGO groep <%= @group.name %></h2>
+<p>
+	Deze pagina zal naast een overzicht van de geregistreerde leden, 
+	tevens een overzicht geven van het aantal bestede uren per week, per lid.
+</p>
+<ul>
+<% @group.members.each do |member| %>
+	<li><%= link_to member.fullname, member_path(member) %></li>
+<% end %>
+</ul>

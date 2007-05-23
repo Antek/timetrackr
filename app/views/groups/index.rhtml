@@ -1,0 +1,10 @@
+<h2>PGO Groepen</h2>
+<p>
+	Deze pagina zal naast een overzicht van de geregistreerde groepen, 
+	tevens een overzicht geven van het aantal bestede uren per week, per groep, per semester.
+</p>
+<ul>
+<% @groups.each do |group| %>
+	<li><%= link_to group.name, group_path(group) %></li>
+<% end %>
+</ul>

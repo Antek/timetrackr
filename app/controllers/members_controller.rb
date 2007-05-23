@@ -1,12 +1,12 @@
 class MembersController < ApplicationController
-  skip_before_filter :login_required, :only => [:new, :create]
+  skip_before_filter :login_required, :only => [:new, :create, :show]
   
   # render new.rhtml
   def new
   end
   
   def show
-    @member = current_member
+    @member = Member.find(params[:id])
   end
 
   def create

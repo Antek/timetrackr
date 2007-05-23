@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>TimeTrackr - making fun, out of tracking time</title>
+	<%= javascript_include_tag :defaults %>
+	<%= stylesheet_link_tag 'default' %>
+</head>
+<body>
+<div class="container">
+
+<div class="titleblock"><h1>TimeTrackr</h1><p>&ldquo;Mijn urenverantwoording bijhouden was nog nooit leuk!.&rdquo; - anonieme gebruiker</p></div>
+
+<div><ul class="navbar">
+		 <li><%= link_to "Groepen", groups_path, :class => 'nav' %></li>
+		 <li><%= link_to "Mijn uren", member_path(current_member), :class => 'nav' if logged_in? %>
+		 <li><%= link_to "Uitloggen", logout_path, :class => 'nav' if logged_in? %></li>
+</ul></div>
+
+<!-- <div class="rightcontainer">
+
+	<div class="rightbox"><h2>News</h2><p>This morning a man in New Zealand got out of bed and had breakfast. Find out more <a href="#">here</a>.</p></div>
+
+  <div class="rightbox linkbox"><h2>Links</h2>
+  		 <a href="http://www.google.com/" title="Google">Google</a>
+  		 <a href="http://www.oswd.org/" title="Open Source Web Design">OSWD</a>
+  		 <a href="http://www.wpdfd.com/" title="Web Page Design for Designers">WPDFD</a>
+  		 <a href="http://www.sxc.hu/" title="stock.xchng">stock.xchng</a>
+  		 <a href="http://www.tomshardware.com/index.html" title="Tom's Hardware Guide">THG</a>
+  		 <a href="http://www.howstuffworks.com/" title="How Stuff Works">How Stuff Works</a>
+  </div>
+</div> -->
+
+<div class="content">
+		 <%= yield %>
+</div>
+
+<div class="footer">
+  <div class="right">
+    <p>&copy; 2007 Whatsisname Thingymajig</p>
+    <p><a href="http://validator.w3.org/check/referer">Validate XHTML 1.0 Strict</a></p>
+  </div>
+    <p>Created by Matthijs Langenberg</p>
+    <p>Photo Credit: Dimiter Tzankov, <a href="http://www.sxc.hu/">stock.xchng</a></p>
+</div>
+
+</div>
+</body>
+</html>
