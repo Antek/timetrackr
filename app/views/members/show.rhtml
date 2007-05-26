@@ -1,5 +1,5 @@
 <h1>Groep: <%= link_to @member.group.name, group_path(@member.group) %></h1>
-<h2>Lid: <%= @member.fullname %></h2>
+<h2>Lid: <%= link_to @member.fullname, member_path(@member) %></h2>
 
 <% if logged_in? && @member == current_member %>
 <hr />
