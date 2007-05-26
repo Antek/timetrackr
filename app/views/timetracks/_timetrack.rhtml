@@ -2,4 +2,11 @@
 	<td><%= timetrack.date.strftime("%a %d %b") %></td>
 	<td><%= timetrack.description %></td>
 	<td><%= timetrack.hours_spent %></td>
+	<td>
+	<% if logged_in? && @member == current_member %>
+		<%= link_to image_tag("icons/delete.png"), member_timetrack_path(:member_id => @member, :id => timetrack), 
+					:method => 'delete',
+					:confirm => 'Weet u het zeker, deze actie kan niet ongedaan worden gemaakt.'  %>
+	<% end %>
+	</td>
 </tr>

@@ -16,14 +16,48 @@
 			<th>Datum</th>
 			<th>Omschrijving</th>
 			<th>Aantal uren</th>
+			<th></th>
 		</tr>
 		<%= render :partial => 'timetracks/timetrack', :collection => @member.timetracks.in_week(week) %>
 		<tr>
 			<td></td>
 			<td>Totaal</td>
 			<td id='total-time'><%= @member.timetracks.total_hours_in_week(week) %></td>
+			<td></td>
 		</tr>
 	</table>
 	<% end %>
 <% end %>
 
+<% if @member.timetracks.weeks.to_a.size > 1 %>
+	<div><canvas id="plotr" height="300" width="500"></canvas></div>
+
+	<script type="text/javascript">
+		var dataset = {
+			'hours': [
+			<% i = 0 %>
+			<% @member.timetracks.weeks.each do |week| %>
+				<%= "[#{i}, #{@member.timetracks.total_hours_in_week(week)}]," -%>
+				<% i += 1 %>
+			<% end %>
+		]};
+		var options = {
+			padding: {left: 30, right: 0, top: 10, bottom: 30},
+			colorScheme: 'blue',
+			backgroundColor: '#d8efb0',
+			   	xTicks: [
+				<% i = 0 %>
+				<% @member.timetracks.weeks.each do |week| %>
+					{v:<%= i %>, label:'week <%= week %> '}, 
+					<% i += 1 %>
+				<% end %>
+			]		
+		};
+	
+		
+			var lineChart = new Plotr.LineChart('plotr', options);
+			lineChart.addDataset(dataset);
+			lineChart.render();
+	
+	</script>
+<% end %>

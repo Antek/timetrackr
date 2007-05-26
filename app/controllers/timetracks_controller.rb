@@ -8,4 +8,9 @@ class TimetracksController < ApplicationController
   rescue ActiveRecord::RecordInvalid
     render :template => 'members/show'
   end
+  
+  def destroy
+    current_member.timetracks.find(params[:id]).destroy
+    redirect_to member_path(current_member)
+  end
 end

@@ -8,3 +8,38 @@
 	<li><%= link_to group.name, group_path(group) %></li>
 <% end %>
 </ul>
+
+<% unless @groups.empty? %>
+	<p>Het totaal aantal uren per groeps:</p>
+<div>
+	<canvas id="plotr" height="300" width="500"></canvas>
+</div>
+<script type="text/javascript">
+	var dataset = {
+		'hours': [
+		<% i = 0 %>
+		<% @groups.each do |group| %>
+			<%= "[#{i}, #{group.total_hours}]," -%>
+			<% i += 1 %>
+		<% end %>
+	]};
+	var options = {
+		padding: {left: 30, right: 0, top: 10, bottom: 30},
+		colorScheme: 'blue',
+		backgroundColor: '#d8efb0',
+		   	xTicks: [
+			<% i = 0 %>
+			<% @groups.each do |group| %>
+				{v:<%= i %>, label:'<%= group.name %> '}, 
+				<% i += 1 %>
+			<% end %>
+		]		
+	};
+	
+		
+		var lineChart = new Plotr.BarChart('plotr', options);
+		lineChart.addDataset(dataset);
+		lineChart.render();
+	
+</script>
+<% end %>

@@ -20,7 +20,7 @@ class Member < ActiveRecord::Base
       total
     end
   end
-  
+    
   belongs_to :group
   # Virtual attribute for the unencrypted password
   attr_accessor :password
@@ -35,6 +35,9 @@ class Member < ActiveRecord::Base
   validates_uniqueness_of   :login, :email, :case_sensitive => false
   before_save :encrypt_password
   
+  def total_hours
+    timetracks.sum('hours_spent')
+  end
   
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
   def self.authenticate(login, password)
