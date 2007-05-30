@@ -19,7 +19,9 @@
 		'hours': [
 		<% i = 0 %>
 		<% @groups.each do |group| %>
-			<%= "[#{i}, #{group.total_hours}]," -%>
+			<%= "[#{i}, #{group.total_hours}]" -%>
+			<%= "," unless group == @groups.last %>
+
 			<% i += 1 %>
 		<% end %>
 	]};
@@ -30,7 +32,8 @@
 		   	xTicks: [
 			<% i = 0 %>
 			<% @groups.each do |group| %>
-				{v:<%= i %>, label:'<%= group.name %> '}, 
+				{v:<%= i %>, label:'<%= group.name %> '} 
+				<%= "," unless group == @groups.last %>
 				<% i += 1 %>
 			<% end %>
 		]		

@@ -37,7 +37,8 @@
 			'hours': [
 			<% i = 0 %>
 			<% @member.timetracks.weeks.each do |week| %>
-				<%= "[#{i}, #{@member.timetracks.total_hours_in_week(week)}]," -%>
+				<%= "[#{i}, #{@member.timetracks.total_hours_in_week(week)}]" -%>
+                                <%= "," unless week == @member.timetracks.weeks.last %>
 				<% i += 1 %>
 			<% end %>
 		]};
@@ -48,7 +49,8 @@
 			   	xTicks: [
 				<% i = 0 %>
 				<% @member.timetracks.weeks.each do |week| %>
-					{v:<%= i %>, label:'week <%= week %> '}, 
+					{v:<%= i %>, label:'week <%= week %> '}
+	                                <%= "," unless week == @member.timetracks.weeks.last %>
 					<% i += 1 %>
 				<% end %>
 			]		
