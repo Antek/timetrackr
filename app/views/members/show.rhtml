@@ -7,8 +7,9 @@
 <hr />
 <% end %>
 
-<% @member.timetracks.weeks.each do |week| %>
-	<% unless @member.timetracks.in_week(week).empty? %>
+<% @member.timetracks.weeks_which_are_not_empty.reverse.each_with_index do |week, index| %>
+	<%= render(:partial => 'chart') if index == 1 %>
+
 	<h3>2008, week <%= week %></h3>
 	<table id="timetracks">
 		<caption>Urenoverzicht week <%= week %>, 2008</caption>
@@ -26,40 +27,5 @@
 			<td></td>
 		</tr>
 	</table>
-	<% end %>
 <% end %>
 
-<% if @member.timetracks.weeks.to_a.size > 1 %>
-	<div><canvas id="plotr" height="300" width="500"></canvas></div>
-
-	<script type="text/javascript">
-		var dataset = {
-			'hours': [
-			<% i = 0 %>
-			<% @member.timetracks.weeks.each do |week| %>
-				<%= "[#{i}, #{@member.timetracks.total_hours_in_week(week)}]" -%>
-                                <%= "," unless week == @member.timetracks.weeks.last %>
-				<% i += 1 %>
-			<% end %>
-		]};
-		var options = {
-			padding: {left: 30, right: 0, top: 10, bottom: 30},
-			colorScheme: 'blue',
-			backgroundColor: '#d8efb0',
-			   	xTicks: [
-				<% i = 0 %>
-				<% @member.timetracks.weeks.each do |week| %>
-					{v:<%= i %>, label:'week <%= week %> '}
-	                                <%= "," unless week == @member.timetracks.weeks.last %>
-					<% i += 1 %>
-				<% end %>
-			]		
-		};
-	
-		
-			var lineChart = new Plotr.LineChart('plotr', options);
-			lineChart.addDataset(dataset);
-			lineChart.render();
-	
-	</script>
-<% end %>

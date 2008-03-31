@@ -1,0 +1,34 @@
+<% if @member.timetracks.weeks.to_a.size > 1 %>
+	<div><canvas id="plotr" height="300" width="500"></canvas></div>
+
+	<script type="text/javascript">
+		var dataset = {
+			'hours': [
+			<% i = 0 %>
+			<% @member.timetracks.weeks.each do |week| %>
+				<%= "[#{i}, #{@member.timetracks.total_hours_in_week(week)}]" -%>
+                                <%= "," unless week == @member.timetracks.weeks.last %>
+				<% i += 1 %>
+			<% end %>
+		]};
+		var options = {
+			padding: {left: 30, right: 0, top: 10, bottom: 30},
+			colorScheme: 'blue',
+			backgroundColor: '#d8efb0',
+			   	xTicks: [
+				<% i = 0 %>
+				<% @member.timetracks.weeks.each do |week| %>
+					{v:<%= i %>, label:'week <%= week %> '}
+	                                <%= "," unless week == @member.timetracks.weeks.last %>
+					<% i += 1 %>
+				<% end %>
+			]		
+		};
+	
+		
+			var lineChart = new Plotr.LineChart('plotr', options);
+			lineChart.addDataset(dataset);
+			lineChart.render();
+	
+	</script>
+<% end %>

@@ -9,6 +9,10 @@ class Member < ActiveRecord::Base
       first_week..last_week
     end
     
+    def weeks_which_are_not_empty
+      weeks.to_a.select { |week| in_week(week).empty? == false }
+    end
+    
     def in_week(week)
       self.find(:all, :conditions => ['date BETWEEN ? AND ?', Date.commercial(2008, week, 1), Date.commercial(2008, week, 7) ])
     end
