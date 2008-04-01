@@ -12,6 +12,9 @@
 <hr />
 <% end %>
 
+<p>Gebruikte labels binnen de groep zijn: <%= @member.group.labels.collect { |label| " <em>#{label.name}</em> " }%>
+
+
 <% @member.timetracks.weeks_which_are_not_empty.reverse.each_with_index do |week, index| %>
 	<%= render(:partial => 'chart') if index == 1 %>
 
@@ -31,6 +34,23 @@
 			<td id='total-time'><%= @member.timetracks.total_hours_in_week(week) %></td>
 			<td></td>
 		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+				
+		<% @member.group.labels.each do |label| %>		
+			<tr>
+				<td></td>
+				<td><em>Totaal label <%= label.name %></em></td>
+				<td id='total-time-<%= label.id %>'><%= @member.timetracks.total_hours_in_week_per_label(week, label.id) %></td>
+				<td></td>
+			</tr>
+		<% end %>
 	</table>
+	
+
 <% end %>
 

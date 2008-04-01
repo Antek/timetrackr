@@ -9,7 +9,8 @@
 	<p>
 	<label>Op</label><%= f.date_select :date %> <label>spendeerde ik</label><%= f.text_field :hours_spent, :size => 10 %><label>uur</label>
 	<br/>
-	<label>aan de taak</label><%= f.text_field :description, :size => 25 %>
+	<label>aan de taak</label><%= f.text_field :description, :size => 25 %> 
+	<label>(evt. label:</label><%= f.text_field :label_name, :size => 10 %>)
 	<%= submit_tag 'registreer dit' %>
 	</p>
 	<% end -%>

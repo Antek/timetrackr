@@ -1,5 +1,6 @@
 class Group < ActiveRecord::Base
   has_many :members
+  has_many :labels
   has_many :timetracks, :through => :members, :order => 'timetracks.date ASC, timetracks.created_at ASC' do
     def weeks
       timetracks = self.find(:all)

@@ -22,7 +22,16 @@ class Member < ActiveRecord::Base
       total.nil? ? 0 : total
     end
     
+    def total_hours_in_week_per_label(week, label_id)
+      total = self.sum(:hours_spent, conditions_for_week_per_label(week, label_id))
+      total.nil? ? 0 : total
+    end
+    
     private
+    def conditions_for_week_per_label(week, label_id)
+      {:conditions => ['date BETWEEN ? AND ? AND label_id = ?', Date.commercial(2008, week, 1), Date.commercial(2008, week, 7), label_id ]}
+    end
+    
     def conditions_for_week(week)
       {:conditions => ['date BETWEEN ? AND ?', Date.commercial(2008, week, 1), Date.commercial(2008, week, 7) ]}
     end

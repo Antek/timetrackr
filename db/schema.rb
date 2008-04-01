@@ -9,11 +9,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 3) do
+ActiveRecord::Schema.define(:version => 5) do
 
   create_table "groups", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
+  end
+
+  create_table "labels", :force => true do |t|
+    t.string   "name"
+    t.integer  "group_id",   :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "members", :force => true do |t|
@@ -36,6 +43,7 @@ ActiveRecord::Schema.define(:version => 3) do
     t.date     "date"
     t.string   "description"
     t.float    "hours_spent"
+    t.integer  "label_id"
   end
 
 end
