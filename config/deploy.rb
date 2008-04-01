@@ -9,7 +9,6 @@ set :group_writable, false
 set :repository, "git://github.com/mlangenberg/timetrackr.git"
 set :scm, "git"
 set :deploy_via, :remote_cache
-#set :git_shallow_clone, 1
 
 role :web, application
 role :app, application
