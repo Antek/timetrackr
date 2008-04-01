@@ -14,14 +14,17 @@ class Member < ActiveRecord::Base
     end
     
     def in_week(week)
-      self.find(:all, :conditions => ['date BETWEEN ? AND ?', Date.commercial(2008, week, 1), Date.commercial(2008, week, 7) ])
+      self.find(:all, conditions_for_week(week))
     end
     
     def total_hours_in_week(week)
-      total=0
-      arr = self.find(:all, :conditions => ['date BETWEEN ? AND ?', Date.commercial(2008, week, 1), Date.commercial(2008, week, 7) ])
-      arr.each {|w| total += w.hours_spent }
-      total
+      total = self.sum(:hours_spent, conditions_for_week(week))
+      total.nil? ? 0 : total
+    end
+    
+    private
+    def conditions_for_week(week)
+      {:conditions => ['date BETWEEN ? AND ?', Date.commercial(2008, week, 1), Date.commercial(2008, week, 7) ]}
     end
   end
     
