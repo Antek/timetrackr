@@ -5,11 +5,11 @@ class Timetrack < ActiveRecord::Base
   validates_numericality_of :hours_spent
   
   def label_name=(name)
-    @label_name = name.downcase
+    @label_name = name.downcase.strip
   end
   
   def after_save
-    if self.label.nil?
+    if self.label.nil? && !@label_name.blank?
       self.label = Label.find_or_create_by_name_and_group_id(@label_name, member.group_id)
       save
     end
