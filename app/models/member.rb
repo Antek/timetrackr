@@ -34,10 +34,18 @@ class Member < ActiveRecord::Base
     
     # "http://chart.apis.google.com/chart?cht=p3&chd=t:10,10,10&chs=375x150&chl=test|foo|project"
     def pie_chart_url_for_week_with_labels(week, labels)
-      label_names = labels.map(&:name).join('|')
-      label_data = labels.map{ |label| total_hours_in_week_per_label(week, label.id) }.join(',')
+      label_names = labels.map(&:name)
+      label_data = labels.map{ |label| total_hours_in_week_per_label(week, label.id) }
+      
       hours_with_label = total_hours_in_week(week) - total_hours_in_week_with_label(week)
-      "http://chart.apis.google.com/chart?cht=p3&chd=t:#{label_data},#{hours_with_label}&chs=375x150&chl=#{label_names}|overige"
+      if hours_with_label > 0
+        label_names << 'overige'
+        label_data << hours_with_label
+      end
+      
+      label_names = label_names.join('|')
+      label_data = label_data.join(',')
+      "http://chart.apis.google.com/chart?cht=p3&chd=t:#{label_data}&chs=375x150&chl=#{label_names}"
     end
     
     private
