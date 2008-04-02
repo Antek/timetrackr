@@ -9,7 +9,7 @@ class Timetrack < ActiveRecord::Base
   end
   
   def after_save
-    if self.label.nil? && !@label_name.blank?
+    if self.label.nil? && !@label_name.blank? && !@label_name.nil?
       self.label = Label.find_or_create_by_name_and_group_id(@label_name, member.group_id)
       save
     end

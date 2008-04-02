@@ -27,6 +27,13 @@ class Member < ActiveRecord::Base
       total.nil? ? 0 : total
     end
     
+    # "http://chart.apis.google.com/chart?cht=p3&chd=t:10,10,10&chs=375x150&chl=test|foo|project"
+    def pie_chart_url_for_week_with_labels(week, labels)
+      label_names = labels.map(&:name).join('|')
+      label_data = labels.map{ |label| total_hours_in_week_per_label(week, label.id) }.join(',')
+      "http://chart.apis.google.com/chart?cht=p3&chd=t:#{label_data}&chs=375x150&chl=#{label_names}"
+    end
+    
     private
     def conditions_for_week_per_label(week, label_id)
       {:conditions => ['date BETWEEN ? AND ? AND label_id = ?', Date.commercial(2008, week, 1), Date.commercial(2008, week, 7), label_id ]}
@@ -53,6 +60,11 @@ class Member < ActiveRecord::Base
   
   def total_hours
     timetracks.sum('hours_spent')
+  end
+
+  def used_labels_for_week(week)
+    labels = group.labels.find(:all)
+    labels.delete_if { |label| timetracks.total_hours_in_week_per_label(week, label.id) == 0 }
   end
   
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.

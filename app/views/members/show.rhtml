@@ -41,7 +41,7 @@
 			<td>&nbsp;</td>
 		</tr>
 				
-		<% @member.group.labels.each do |label| %>		
+		<% @member.used_labels_for_week(week).each do |label| %>		
 			<tr>
 				<td></td>
 				<td><em>Totaal label <%= label.name %></em></td>
@@ -51,6 +51,7 @@
 		<% end %>
 	</table>
 	
+	<%= pie_chart_for_member_for_week(@member, week) %>
 
 <% end %>
 
