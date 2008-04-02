@@ -27,14 +27,24 @@ class Member < ActiveRecord::Base
       total.nil? ? 0 : total
     end
     
+    def total_hours_in_week_without_label(week)
+      total = self.sum(:hours_spent, conditions_for_week_without_label(week))
+      total.nil? ? 0 : total
+    end
+    
     # "http://chart.apis.google.com/chart?cht=p3&chd=t:10,10,10&chs=375x150&chl=test|foo|project"
     def pie_chart_url_for_week_with_labels(week, labels)
       label_names = labels.map(&:name).join('|')
       label_data = labels.map{ |label| total_hours_in_week_per_label(week, label.id) }.join(',')
-      "http://chart.apis.google.com/chart?cht=p3&chd=t:#{label_data}&chs=375x150&chl=#{label_names}"
+      hours_without_label = total_hours_in_week(week) - total_hours_in_week_without_label(week)
+      "http://chart.apis.google.com/chart?cht=p3&chd=t:#{label_data},#{hours_without_label}&chs=375x150&chl=#{label_names}|overige"
     end
     
     private
+    def conditions_for_week_without_label(week)
+      {:conditions => ['date BETWEEN ? AND ? AND label_id is NULL', Date.commercial(2008, week, 1), Date.commercial(2008, week, 7)]}
+    end
+    
     def conditions_for_week_per_label(week, label_id)
       {:conditions => ['date BETWEEN ? AND ? AND label_id = ?', Date.commercial(2008, week, 1), Date.commercial(2008, week, 7), label_id ]}
     end
