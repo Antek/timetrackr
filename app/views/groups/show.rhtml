@@ -10,9 +10,5 @@
 </ul>
 
 <% unless @group.members.empty? %>	
-	<p>Het totaal aantal uren per groepslid:</p>
-<div>
-	<canvas id="plotr" height="300" width="500"></canvas>
-</div>
-
 <%= line_chart_for_group(@group) %>
+<% end %>
