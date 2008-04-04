@@ -15,34 +15,4 @@
 	<canvas id="plotr" height="300" width="500"></canvas>
 </div>
 
-<script type="text/javascript">
-	var dataset = {
-		'hours': [
-		<% i = 0 %>
-		<% @group.members.each do |member| %>
-			<%= "[#{i}, #{member.total_hours}]" -%>
-                        <%= "," unless member == @group.members.last %>
-			<% i += 1 %>
-		<% end %>
-	]};
-	var options = {
-		padding: {left: 30, right: 0, top: 10, bottom: 30},
-		colorScheme: 'blue',
-		backgroundColor: '#d8efb0',
-		   	xTicks: [
-			<% i = 0 %>
-			<% @group.members.each do |member| %>
-				{v:<%= i %>, label:'<%= member.fullname %> '} 
-                                 <%= "," unless member == @group.members.last %>
-				<% i += 1 %>
-			<% end %>
-		]		
-	};
-	
-		
-		var lineChart = new Plotr.BarChart('plotr', options);
-		lineChart.addDataset(dataset);
-		lineChart.render();
-	
-</script>
-<% end %>
+<%= line_chart_for_group(@group) %>
