@@ -1,5 +1,7 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
+  COLORS = %w[ 737373 FF3149 50BF52 3988CD FF9240 96499D D15542 DC5EA6 ]
+  
   def pie_chart_for_member_for_week(member, week)
     used_labels = member.used_labels_for_week(week)
     unless used_labels.empty?
@@ -11,10 +13,10 @@ module ApplicationHelper
     GoogleChart::LineChart.new('600x300', "uren per week per persoon", false) do |lc|
       weeks = group.timetracks.weeks
       max_per_members = []
-      
-      group.members.each do |member|
+          
+      group.members.each_with_index do |member, index|
         line_data = weeks.collect { |week| member.timetracks.total_hours_in_week(week) }
-        lc.data member.fullname, line_data, line_color(member.id)
+        lc.data member.fullname, line_data, line_color(index)        
         max_per_members << line_data.max
       end
             
@@ -27,9 +29,8 @@ module ApplicationHelper
   end
   
   private
-  def line_color(id = rand(15))
-    colors = []
-    colors = (15), (id % 16), (id*3 % 16)
-    colors.map { |c| c.to_s(16) + c.to_s(16) }.join('')
+  def line_color(id = rand(COLORS.SIZE))
+    id = id % COLORS.size
+    COLORS[id]
   end
 end
